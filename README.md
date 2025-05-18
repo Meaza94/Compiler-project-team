@@ -35,19 +35,5 @@ The **Coder** component encrypts and decrypts files using the **Vigenère cipher
 - Non-visible characters remain unchanged
 - Wraps around the ASCII range to preserve readability
 
----
 
-## 🛠️ Building the Project
 
-This project uses **CMake**.
-
-```bash
-# Create and move into the build directory
-mkdir build
-cd build
-
-# Generate build files
-cmake ..
-
-# Build the project
-cmake --build .
