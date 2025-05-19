@@ -8,11 +8,6 @@ language name: mplusplus
 
 */
 
-
-
-
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,7 +20,7 @@ language name: mplusplus
 #include "Step1Coder.h"
 #endif
 
-// Function to perform the Vigenère cipher (encoding or decoding)
+// Function to perform the VigenÃ¨re cipher (encoding or decoding)
 void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key, mplusplus_intg encode) {
     // TO_DO: Define the input and output files (ex: FILE* inputFile, FILE* outputFile
     FILE* inputFile = NULL; // Pointer for the input file
@@ -79,7 +74,7 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
     printf("Operation completed successfully. Output saved to '%s'.\n", outputFileName);
 }
 
-// Function to perform the Vigenère cipher (encoding or decoding)
+// Function to perform the VigenÃ¨re cipher (encoding or decoding)
 mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_strg key, mplusplus_intg encode) {
     // TO_DO: Defensive Programming - Validate Inputs
     if (!inputFileName || !key) { // Check if inputFileName or key is NULL
@@ -110,7 +105,7 @@ mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_s
         return NULL; // Return NULL if the file cannot be opened
     }
 
-    // Step 4: Initialize Local varaibles variables for Vigenère Cipher logic
+    // Step 4: Initialize Local varaibles variables for VigenÃ¨re Cipher logic
     mplusplus_intg KeyIndex = 0; // Tracks the position in the key
     mplusplus_intg KeyLength = strlen(key); // Length of the key
     mplusplus_char ch; // Character read from the input file
