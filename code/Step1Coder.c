@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,12 +25,16 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
 
     // TO_DO: Use defensive programming (checking files)
     inputFile = fopen(inputFileName, "r");
+
+
     if (inputFile == NULL) { // Check if the file is empty or not found in the same path
         printf("Error opening input file: %s\n", inputFileName);
         exit(EXIT_FAILURE);//question for the teacher: exit 0
     }
 
+	// TO_DO: Open the output file for writing
     outputFile = fopen(outputFileName, "w");
+
     if (outputFile == NULL) { // Check if the file is empty or not found in the same path
         printf("Error opening output file: %s\n", outputFileName);
         fclose(inputFile); // Close the input file before exiting
@@ -32,7 +43,7 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
 
     // TO_DO: Define local variables
     mplusplus_intg KeyIndex = 0; // To track the index of the key
-    mplusplus_intg KeyLength = strlen(key); // The length of the key
+    mplusplus_intg KeyLength = strlen(key); // The length of the key mplusplus_strg key = "KEY"; // The key used for encoding/decoding
     mplusplus_char ch = 0; // Character to read from the input file and to be encoded or decoded
 
     // TO_DO: Logic: check if it is encode / decode to change the char (using Vigenere algorithm) - next function
