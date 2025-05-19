@@ -99,8 +99,8 @@ NOTE: Some types may not be directly used by your language,
 
 /* TO_DO: Define your typedefs */
 typedef char			mplusplus_char;
-typedef char*           mplusplus_strg;
-typedef int				mplusplus_intg;
+typedef char*                   mplusplus_strg;
+typedef int		        mplusplus_intg;
 typedef float			mplusplus_real;
 typedef void			mplusplus_void;
 
