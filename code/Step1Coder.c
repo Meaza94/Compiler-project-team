@@ -1,12 +1,22 @@
 /*
+ 
+      TEAM MEMBERS
+
 Student Name: Mihretab Meaza
-student Number: 041106564
+student Number: 041120078
 Professor: Paulo Sousa
 Compilers Assignment 1 
 language name: mplusplus
 
 
+Student Name: Mohamad Al Dakkak
+student Number: 041106564
+Professor: Paulo Sousa
+Compilers Assignment 1
+language name: mplusplus
+
 */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,7 +54,7 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
         exit(EXIT_FAILURE);
     }
 
-    // TO_DO: Define local variables
+	// TO_DO: Define local variables for Vigenère Cipher logic
     mplusplus_intg KeyIndex = 0; // To track the index of the key
     mplusplus_intg KeyLength = strlen(key); // The length of the key mplusplus_strg key = "KEY"; // The key used for encoding/decoding
     mplusplus_char ch = 0; // Character to read from the input file and to be encoded or decoded
