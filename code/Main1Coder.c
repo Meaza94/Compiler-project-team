@@ -1,4 +1,15 @@
 /*
+Student Name: Mihretab Meaza
+student Number: 041106564
+Professor: Paulo Sousa
+Compilers Assignment 1
+language name: mplusplus
+
+
+*/
+
+
+/*
 ************************************************************
 * COMPILERS COURSE - Algonquin College
 * Code version: Summer, 2025
