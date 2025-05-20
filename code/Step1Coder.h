@@ -1,7 +1,6 @@
 /*
-* *************************************************************
-* COMPILERS COURSE - Algonquin College
-           TEAM MEMBERS
+
+      TEAM MEMBERS
 
 Student Name: Mihretab Meaza
 student Number: 041106564
@@ -11,12 +10,12 @@ language name: mplusplus
 
 
 Student Name: Mohamad Al Dakkak
-student Number: :041120078
+student Number: 
 Professor: Paulo Sousa
 Compilers Assignment 1
 language name: mplusplus
 
-/*************************************************************
+*/
 
 
 /*
