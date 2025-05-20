@@ -126,10 +126,16 @@ language name: mplusplus
 
 // Main function to handle command-line arguments
 mplusplus_intg main1Coder(mplusplus_intg argc, mplusplus_strg* argv) {
+
+
+	// Check if the number of arguments is less than 5
 	if (argc < 5) {
 		printf("Usage: %s [cypher=1|decypher=0] <input_file> <output_file>\n", argv[0]);
 		return EXIT_FAILURE;
 	}
+
+
+	//Check if the number of arguments is less than 5
 	mplusplus_strg operation = "";
 	mplusplus_strg inputFileName = "";
 	mplusplus_strg key = STR_LANGNAME;
@@ -154,7 +160,8 @@ mplusplus_intg main1Coder(mplusplus_intg argc, mplusplus_strg* argv) {
 			errorPrint("%s%s%s", "Error: Unknown operation ", operation, ". Use 'cypher' or 'decypher'.\n");
 			return EXIT_FAILURE;
 		}
-		printf("Operation '%s' completed successfully.\n", operation);
+
+       printf("Operation '%s' completed successfully.\n", operation);
 		// Call the other operation in memory
 		// Simply read and display the content of the output file
 		mplusplus_intg size = getSizeOfFile(outputFileName);
