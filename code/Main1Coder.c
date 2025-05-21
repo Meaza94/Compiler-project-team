@@ -124,74 +124,50 @@ language name: mplusplus
 ************************************************************
 */
 
-// Main function to handle command-line arguments
 mplusplus_intg main1Coder(mplusplus_intg argc, mplusplus_strg* argv) {
+    if (argc < 5) {
+        printf("Usage: %s [cypher=1|decypher=0] <input_file> <output_file>\n", argv[0]);
+        return EXIT_FAILURE;
+    }
 
+    mplusplus_strg operation = "";
+    mplusplus_strg inputFileName = "";
+    mplusplus_strg key = STR_LANGNAME;
+    mplusplus_strg outputFileName = "";
 
-	// Check if the number of arguments is less than 5
-	if (argc < 5) {
-		printf("Usage: %s [cypher=1|decypher=0] <input_file> <output_file>\n", argv[0]);
-		return EXIT_FAILURE;
-	}
+    if (argc > 4) {
+        operation = argv[2];
+        inputFileName = argv[3];
+        outputFileName = argv[4];
 
+        if (atoi(operation) == CYPHER)
+            cypher(inputFileName, outputFileName, key);
+        else if (atoi(operation) == DECYPHER)
+            decypher(inputFileName, outputFileName, key);
+        else {
+            errorPrint("Error: Unknown operation %s. Use 'cypher' or 'decypher'.\n", operation);
+            return EXIT_FAILURE;
+        }
 
-	//Check if the number of arguments is less than 5
-	mplusplus_strg operation = "";
-	mplusplus_strg inputFileName = "";
-	mplusplus_strg key = STR_LANGNAME;
-	mplusplus_strg outputFileName = "";
-	if (argc > 4) {
-		operation = argv[2];
-		inputFileName = argv[3];
-		outputFileName = argv[4];
+        printf("Operation '%s' completed successfully.\n", operation);
 
-
-
-		// Call the appropriate function to file
-		if (atoi(operation) == CYPHER)
-			// Call the cypher function
-			cypher(inputFileName, outputFileName, key);
-		// Call the decypher function
-		else if (atoi(operation) == DECYPHER)
-			// Call the decypher function
-			decypher(inputFileName, outputFileName, key);
-		else {
-			// Print error message for unknown operation
-			errorPrint("%s%s%s", "Error: Unknown operation ", operation, ". Use 'cypher' or 'decypher'.\n");
-			return EXIT_FAILURE;
-		}
-
-       printf("Operation '%s' completed successfully.\n", operation);
-		// Call the other operation in memory
-		// Simply read and display the content of the output file
-		mplusplus_intg size = getSizeOfFile(outputFileName);
-		// Check if the file size is greater than 0
-		if (size > 0) {
-			// Open the output file for reading
-			FILE* file = fopen(outputFileName, "r");
-			// Check if the file was opened successfully
-			if (file) {
-				// Allocate memory for the output string
-				mplusplus_strg output = (mplusplus_strg)malloc(size + 1);
-				// Check if memory allocation was successful
-				if (output) {
-					// Read the content of the file into the output string
-					mplusplus_intg bytesRead = fread(output, 1, size, file);
-					// Check if the read operation was successful
-					output[bytesRead] = '\0';
-					// Print the output string
-					printf("OUTPUT:\n%s\n", output);
-					// Free the allocated memory
-					free(output);  // Free the allocated memory
-				}
-				fclose(file);
-			}
-		
-						else {
-				errorPrint("Failed to open output file for reading\n");
-				return EXIT_FAILURE;
-    } // Closing brace for the inner if block
-
-					} // Closing brace for the outer if block
-    } // Closing brace for the main1Coder function
-			}
+        mplusplus_intg size = (mplusplus_intg)getSizeOfFile(outputFileName);
+        if (size > 0) {
+            FILE* file = fopen(outputFileName, "r");
+            if (file) {
+                mplusplus_strg output = (mplusplus_strg)malloc(size + 1);
+                if (output) {
+                    mplusplus_intg bytesRead = (mplusplus_intg)fread(output, 1, size, file);
+                    output[bytesRead] = '\0';
+                    printf("OUTPUT:\n%s\n", output);
+                    free(output);
+                }
+                fclose(file);
+            } else {
+                errorPrint("Failed to open output file for reading\n");
+                return EXIT_FAILURE;
+            }
+        }
+    }
+    return EXIT_SUCCESS;
+}

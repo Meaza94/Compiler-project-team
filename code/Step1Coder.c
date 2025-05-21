@@ -31,8 +31,10 @@ language name: mplusplus
 #endif
 
 // Function to perform the Vigenère cipher (encoding or decoding)
-void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key, mplusplus_intg encode) {
-    
+void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key, const mplusplus_intg encode) {
+    // Function implementation remains unchanged
+
+
     // TO_DO: Define the input and output files (ex: FILE* inputFile, FILE* outputFile
     FILE* inputFile = NULL; // Pointer for the input file
     FILE* outputFile = NULL; // Pointer for the output file
@@ -40,7 +42,7 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
     // TO_DO: Use defensive programming (checking files)
     inputFile = fopen(inputFileName, "r");
 
-
+    //Mohamad and maza
     if (inputFile == NULL) { // Check if the file is empty or not found in the same path
         printf("Error opening input file: %s\n", inputFileName);
         exit(EXIT_FAILURE);//question for the teacher: exit 0
