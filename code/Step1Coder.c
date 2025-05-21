@@ -42,7 +42,6 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
     // TO_DO: Use defensive programming (checking files)
     inputFile = fopen(inputFileName, "r");
 
-    //Mohamad and maza
     if (inputFile == NULL) { // Check if the file is empty or not found in the same path
         printf("Error opening input file: %s\n", inputFileName);
         exit(EXIT_FAILURE);//question for the teacher: exit 0
