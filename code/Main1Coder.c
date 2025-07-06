@@ -1,6 +1,6 @@
-/*
+ï»¿/*
 
-	  TEAM MEMBERS
+      TEAM MEMBERS
 
 Student Name: Mihretab Meaza
 student Number: 041106564
@@ -29,23 +29,23 @@ language name: mplusplus
 # ECHO "=---------------------------------------="
 # ECHO "|  COMPILERS - ALGONQUIN COLLEGE (S25)  |"
 # ECHO "=---------------------------------------="
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@           %&@@@@@@@@@@@     @@    ”
-# ECHO "    @@       @%% (@@@@@@@@@  @     @@    ”
-# ECHO "    @@      @& @   @ @       @     @@    ”
-# ECHO "    @@     @ @ %  / /   @@@@@@     @@    ”
-# ECHO "    @@      & @ @  @@              @@    ”
-# ECHO "    @@       @/ @*@ @ @   @        @@    ”
-# ECHO "    @@           @@@@  @@ @ @      @@    ”
-# ECHO "    @@            /@@    @@@ @     @@    ”
-# ECHO "    @@     @      / /     @@ @     @@    ”
-# ECHO "    @@     @ @@   /@/   @@@ @      @@    ”
-# ECHO "    @@     @@@@@@@@@@@@@@@         @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@         S O F I A           @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@           %&@@@@@@@@@@@     @@    "
+# ECHO "    @@       @%% (@@@@@@@@@  @     @@    "
+# ECHO "    @@      @& @   @ @       @     @@    "
+# ECHO "    @@     @ @ %  / /   @@@@@@     @@    "
+# ECHO "    @@      & @ @  @@              @@    "
+# ECHO "    @@       @/ @*@ @ @   @        @@    "
+# ECHO "    @@           @@@@  @@ @ @      @@    "
+# ECHO "    @@            /@@    @@@ @     @@    "
+# ECHO "    @@     @      / /     @@ @     @@    "
+# ECHO "    @@     @ @@   /@/   @@@ @      @@    "
+# ECHO "    @@     @@@@@@@@@@@@@@@         @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@         S O F I A           @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
 # ECHO "                                         "
 # ECHO "[CODER SCRIPT ..........................]"
 # ECHO "                                         "
@@ -53,9 +53,9 @@ language name: mplusplus
 
 /*
 ************************************************************
-* File name: MainCoder.c
+* File name: Main1Coder.c
 * Compiler: MS Visual Studio 2022
-* Course: CST 8152 – Compilers, Lab Section: [011, 012]
+* Course: CST 8152 â€“ Compilers, Lab Section: [011, 012]
 * Assignment: A12, A22, A32.
 * Date: Jan 01 2025
 * Professor: Paulo Sousa
@@ -72,7 +72,7 @@ language name: mplusplus
  * The #define _CRT_SECURE_NO_WARNINGS should be used in MS Visual Studio projects
  * to suppress the warnings about using "unsafe" functions like fopen()
  * and standard sting library functions defined in string.h.
- * The define directive does not have any effect on other compiler projects 
+ * The define directive does not have any effect on other compiler projects
  * (Gcc, VSCode, Codeblocks, etc.).
  *.............................................................................
  */
@@ -85,7 +85,7 @@ language name: mplusplus
 #include <stdarg.h>
 #include <ctype.h>
 
-// is there any denfine for this is my compiler.h 
+ // is there any denfine for this is my compiler.h 
 #ifndef COMPILERS_H_
 #include "Compilers.h"
 #endif
@@ -107,22 +107,22 @@ language name: mplusplus
  * (see "Compilers.h")
  */
 
-/*
- * -------------------------------------------------------------
- *  Function declarations
- * -------------------------------------------------------------
- */
+ /*
+  * -------------------------------------------------------------
+  *  Function declarations
+  * -------------------------------------------------------------
+  */
 
-/*
-************************************************************
-* Coder starting method
-* Params:
-*	- Mode: Cypher/decypher
-*	- Input: Filename
-*   - Key: Encrypt word
-*	- Output: Filename
-************************************************************
-*/
+  /*
+  ************************************************************
+  * Coder starting method
+  * Params:
+  *	- Mode: Cypher/decypher
+  *	- Input: Filename
+  *   - Key: Encrypt word
+  *	- Output: Filename
+  ************************************************************
+  */
 
 mplusplus_intg main1Coder(mplusplus_intg argc, mplusplus_strg* argv) {
     if (argc < 5) {
@@ -151,19 +151,20 @@ mplusplus_intg main1Coder(mplusplus_intg argc, mplusplus_strg* argv) {
 
         printf("Operation '%s' completed successfully.\n", operation);
 
-        mplusplus_intg size = (mplusplus_intg)getSizeOfFile(outputFileName);
+        mplusplus_long size = getSizeOfFile(outputFileName);
         if (size > 0) {
             FILE* file = fopen(outputFileName, "r");
             if (file) {
-                mplusplus_strg output = (mplusplus_strg)malloc(size + 1);
+                mplusplus_strg output = (mplusplus_strg)malloc((size_t)size + 1);
                 if (output) {
-                    mplusplus_intg bytesRead = (mplusplus_intg)fread(output, 1, size, file);
+                    size_t bytesRead = fread(output, 1, (size_t)size, file);
                     output[bytesRead] = '\0';
                     printf("OUTPUT:\n%s\n", output);
                     free(output);
                 }
                 fclose(file);
-            } else {
+            }
+            else {
                 errorPrint("Failed to open output file for reading\n");
                 return EXIT_FAILURE;
             }

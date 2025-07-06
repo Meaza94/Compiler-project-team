@@ -1,11 +1,11 @@
 /*
- 
+
       TEAM MEMBERS{1}
 
 Student Name: Mihretab Meaza
 student Number: 041106564
 Professor: Paulo Sousa
-Compilers Assignment 1 
+Compilers Assignment 1
 language name: mplusplus
 
         TEAM MEMBERS{2}
@@ -18,6 +18,7 @@ language name: mplusplus
 
 */
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,9 +34,6 @@ language name: mplusplus
 
 // Function to perform the Vigenère cipher (encoding or decoding)
 void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key, const mplusplus_intg encode) {
-    // Function implementation remains unchanged
-
-
     // TO_DO: Define the input and output files (ex: FILE* inputFile, FILE* outputFile
     FILE* inputFile = NULL; // Pointer for the input file
     FILE* outputFile = NULL; // Pointer for the output file
@@ -48,51 +46,51 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
         exit(EXIT_FAILURE);//question for the teacher: exit 0
     }
 
-	// TO_DO: Open the output file for writing
+    // TO_DO: Open the output file for writing
     outputFile = fopen(outputFileName, "w");
 
     if (outputFile == NULL) { // Check if the file is empty or not found in the same path
         printf("Error opening output file: %s\n", outputFileName);
         fclose(inputFile); // Close the input file before exiting
-		exit(EXIT_FAILURE); // Exit with failure status if the output file cannot be opened
+        exit(EXIT_FAILURE); // Exit with failure status if the output file cannot be opened
     }
 
 
-	// TO_DO: Define local variables for Vigenère Cipher logic
+    // TO_DO: Define local variables for Vigenère Cipher logic
     mplusplus_intg KeyIndex = 0; // To track the index of the key
-    mplusplus_intg KeyLength = strlen(key); // The length of the key mplusplus_strg key = "KEY"; // The key used for encoding/decoding
+    mplusplus_intg KeyLength = (mplusplus_intg)strlen(key); // The length of the key - cast to avoid warning
     mplusplus_char ch = 0; // Character to read from the input file and to be encoded or decoded
 
 
 
-// ============================================================================
-// Begin reading the input file character by character using fgetc().
-// The goal is to encrypt or decrypt each character using a repeating key
-// (in this case, "mplusplus") which is 9 characters long.
-//
-// Here's how it works:
-// 1. 'ch' holds each character read from the file.
-// 2. 'keyIndex' tracks the current position in the key string.
-// 3. We apply an encryption/decryption operation using the key character
-//    corresponding to 'keyIndex'.
-//
-// Since the key is shorter than the file content, we cycle through the key
-// repeatedly. This is done by incrementing 'keyIndex' after each operation,
-// and resetting it back to 0 once it reaches the length of the key 8.
-//
-//
-// The loop continues until the end-of-file (EOF) is reached, ensuring every
-// character in the file is processed exactly once.
-// ============================================================================
+    // ============================================================================
+    // Begin reading the input file character by character using fgetc().
+    // The goal is to encrypt or decrypt each character using a repeating key
+    // (in this case, "mplusplus") which is 9 characters long.
+    //
+    // Here's how it works:
+    // 1. 'ch' holds each character read from the file.
+    // 2. 'keyIndex' tracks the current position in the key string.
+    // 3. We apply an encryption/decryption operation using the key character
+    //    corresponding to 'keyIndex'.
+    //
+    // Since the key is shorter than the file content, we cycle through the key
+    // repeatedly. This is done by incrementing 'keyIndex' after each operation,
+    // and resetting it back to 0 once it reaches the length of the key 8.
+    //
+    //
+    // The loop continues until the end-of-file (EOF) is reached, ensuring every
+    // character in the file is processed exactly once.
+    // ============================================================================
 
 
-    // TO_DO: Logic: check if it is encode / decode to change the char (using Vigenere algorithm) - next function
- while ((ch = fgetc(inputFile)) != EOF) { // EOF = End of File. When reaching the end of the file, it will stop looping (reading from the file).
+        // TO_DO: Logic: check if it is encode / decode to change the char (using Vigenere algorithm) - next function
+    while ((ch = fgetc(inputFile)) != EOF) { // EOF = End of File. When reaching the end of the file, it will stop looping (reading from the file).
         if (ch >= ASCII_START && ch <= ASCII_END) { // Check if the character is within the ASCII Domain
             mplusplus_char keyChar = key[KeyIndex % KeyLength]; // Get the corresponding character from the key
             mplusplus_intg shift = keyChar - ASCII_START; // Calculate the shift based on the key character
 
-			if (encode == CYPHER) {// 1=CYPHER
+            if (encode == CYPHER) {// 1=CYPHER
                 ch = ((ch - ASCII_START + shift) % ASCII_RANGE) + ASCII_START;
             }
             else if (encode == DECYPHER) {//0=DECYPHER
@@ -103,20 +101,20 @@ void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outpu
 
         fputc(ch, outputFile); // Write the transformed character to the output file
 
-	}//end of while loop
+    }//end of while loop
 
     // TO_DO: Close the files
     fclose(inputFile);
     fclose(outputFile);
 
-    
-    printf("Operation completed successfully. Output saved to '%s'.\n", outputFileName); 
+
+    printf("Operation completed successfully. Output saved to '%s'.\n", outputFileName);
 }
 
 // Function to perform the Vigenère cipher (encoding or decoding)
-mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_strg key, mplusplus_intg encode) {
-    
-// TO_DO: Defensive Programming - Validate Inputs
+mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_strg key, const mplusplus_intg encode) {
+
+    // TO_DO: Defensive Programming - Validate Inputs
     if (!inputFileName || !key) { // Check if inputFileName or key is NULL
         printf("Error: Invalid arguments provided to vigenereMem.\n");
         return NULL; // Return NULL for invalid inputs
@@ -152,11 +150,11 @@ mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_s
 
     // Step 4: Initialize Local varaibles variables for Vigenère Cipher logic
     mplusplus_intg KeyIndex = 0; // Tracks the position in the key
-    mplusplus_intg KeyLength = strlen(key); // Length of the key
+    mplusplus_intg KeyLength = (mplusplus_intg)strlen(key); // Length of the key - cast to avoid warning
     mplusplus_char ch; // Character read from the input file
     mplusplus_intg outputIndex = 0; // Index for writing to the output string
 
-    
+
 
     // ============================================================================
 // Begin reading the input file character by character using fgetc().
@@ -180,7 +178,7 @@ mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_s
 // The loop continues until the end-of-file (EOF) is reached, ensuring every
 // character in the file is processed exactly once.
 // ============================================================================
-  
+
 
 // Step 5: Process the file character by character(same as the vigener file function)
     while ((ch = fgetc(inputFile)) != EOF) { // Read the file character by character
@@ -297,7 +295,7 @@ mplusplus_intg getSizeOfFile(const mplusplus_strg filename) {
     }
 
     // Get the current position of the file pointer using ftell (size of the file)
-    mplusplus_intg size = ftell(file);
+    long size = ftell(file);
     if (size == -1L) { // Check if ftell fails
         printf("Error: Unable to determine the size of file '%s'.\n", filename);
         fclose(file); // Close the file before exiting
@@ -307,6 +305,6 @@ mplusplus_intg getSizeOfFile(const mplusplus_strg filename) {
     // Close the file
     fclose(file);
 
-    // Return the size of the file
-    return size;
+    // Return the size of the file (cast to our integer type)
+    return (mplusplus_intg)size;
 }

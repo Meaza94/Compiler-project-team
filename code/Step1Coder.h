@@ -29,23 +29,23 @@ language name: mplusplus
 # ECHO "=---------------------------------------="
 # ECHO "|  COMPILERS - ALGONQUIN COLLEGE (S25)  |"
 # ECHO "=---------------------------------------="
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@           %&@@@@@@@@@@@     @@    ”
-# ECHO "    @@       @%% (@@@@@@@@@  @     @@    ”
-# ECHO "    @@      @& @   @ @       @     @@    ”
-# ECHO "    @@     @ @ %  / /   @@@@@@     @@    ”
-# ECHO "    @@      & @ @  @@              @@    ”
-# ECHO "    @@       @/ @*@ @ @   @        @@    ”
-# ECHO "    @@           @@@@  @@ @ @      @@    ”
-# ECHO "    @@            /@@    @@@ @     @@    ”
-# ECHO "    @@     @      / /     @@ @     @@    ”
-# ECHO "    @@     @ @@   /@/   @@@ @      @@    ”
-# ECHO "    @@     @@@@@@@@@@@@@@@         @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@         S O F I A           @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@           %&@@@@@@@@@@@     @@    "
+# ECHO "    @@       @%% (@@@@@@@@@  @     @@    "
+# ECHO "    @@      @& @   @ @       @     @@    "
+# ECHO "    @@     @ @ %  / /   @@@@@@     @@    "
+# ECHO "    @@      & @ @  @@              @@    "
+# ECHO "    @@       @/ @*@ @ @   @        @@    "
+# ECHO "    @@           @@@@  @@ @ @      @@    "
+# ECHO "    @@            /@@    @@@ @     @@    "
+# ECHO "    @@     @      / /     @@ @     @@    "
+# ECHO "    @@     @ @@   /@/   @@@ @      @@    "
+# ECHO "    @@     @@@@@@@@@@@@@@@         @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@         S O F I A           @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
 # ECHO "                                         "
 # ECHO "[CODER SCRIPT ..........................]"
 # ECHO "                                         "
@@ -53,13 +53,13 @@ language name: mplusplus
 
 /*
 ************************************************************
-* File name: Reader.h
+* File name: Step1Coder.h
 * Compiler: MS Visual Studio 2022
 * Course: CST 8152 – Compilers, Lab Section: [011, 012]
 * Assignment: A12.
 * Date: Jan 01 2025
 * Professor: Paulo Sousa
-* Purpose: This file is the main header for Reader (.h)
+* Purpose: This file is the main header for Coder (.h)
 ************************************************************
 */
 
@@ -89,8 +89,8 @@ language name: mplusplus
 /* FUNCTIONS DECLARATION:  .................................. */
 
 /* General Operations */
-void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key, mplusplus_strg encode);
-mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_strg key, mplusplus_strg encode);
+void vigenereFile(const mplusplus_strg inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key, const mplusplus_intg encode);
+mplusplus_strg vigenereMem(const mplusplus_strg inputFileName, const mplusplus_strg key, const mplusplus_intg encode);
 
 void cypher(const mplusplus_strg  inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key);
 void decypher(const mplusplus_strg inputFileName, const mplusplus_strg outputFileName, const mplusplus_strg key);

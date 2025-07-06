@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 
 	  TEAM MEMBERS
 
@@ -29,23 +29,23 @@ language name: mplusplus
 # ECHO "=---------------------------------------="
 # ECHO "|  COMPILERS - ALGONQUIN COLLEGE (S25)  |"
 # ECHO "=---------------------------------------="
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@           %&@@@@@@@@@@@     @@    ”
-# ECHO "    @@       @%% (@@@@@@@@@  @     @@    ”
-# ECHO "    @@      @& @   @ @       @     @@    ”
-# ECHO "    @@     @ @ %  / /   @@@@@@     @@    ”
-# ECHO "    @@      & @ @  @@              @@    ”
-# ECHO "    @@       @/ @*@ @ @   @        @@    ”
-# ECHO "    @@           @@@@  @@ @ @      @@    ”
-# ECHO "    @@            /@@    @@@ @     @@    ”
-# ECHO "    @@     @      / /     @@ @     @@    ”
-# ECHO "    @@     @ @@   /@/   @@@ @      @@    ”
-# ECHO "    @@     @@@@@@@@@@@@@@@         @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@         S O F I A           @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@           %&@@@@@@@@@@@     @@    "
+# ECHO "    @@       @%% (@@@@@@@@@  @     @@    "
+# ECHO "    @@      @& @   @ @       @     @@    "
+# ECHO "    @@     @ @ %  / /   @@@@@@     @@    "
+# ECHO "    @@      & @ @  @@              @@    "
+# ECHO "    @@       @/ @*@ @ @   @        @@    "
+# ECHO "    @@           @@@@  @@ @ @      @@    "
+# ECHO "    @@            /@@    @@@ @     @@    "
+# ECHO "    @@     @      / /     @@ @     @@    "
+# ECHO "    @@     @ @@   /@/   @@@ @      @@    "
+# ECHO "    @@     @@@@@@@@@@@@@@@         @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@         S O F I A           @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
 # ECHO "                                         "
 # ECHO "[COMPILER SCRIPT .......................]"
 # ECHO "                                         "
@@ -55,7 +55,7 @@ language name: mplusplus
 ************************************************************
 * File name: compilers.c
 * Compiler: MS Visual Studio 2022
-* Course: CST 8152 – Compilers, Lab Section: [011, 012]
+* Course: CST 8152 â€“ Compilers, Lab Section: [011, 012]
 * Assignment: A12, A22, A32.
 * Date: Jan 01 2025
 * Professor: Paulo Sousa
@@ -63,6 +63,8 @@ language name: mplusplus
 * Function list: main().
 ************************************************************
 */
+
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,18 +86,18 @@ language name: mplusplus
  * ............................................................................
  */
 
-/*
-***********************************************************
-* Function name: main
-* Purpose: Main function
-* Author: Paulo Sousa
-* History/Versions: Ver F22
-* Called functions: mainReader(), mainScanner(), mainParser()
-* Parameters: Command line arguments - argc, argv
-* Return value: Status
-* Algorithm: -
-*************************************************************
-*/
+ /*
+ ***********************************************************
+ * Function name: main
+ * Purpose: Main function
+ * Author: Paulo Sousa
+ * History/Versions: Ver F22
+ * Called functions: mainReader(), mainScanner(), mainParser()
+ * Parameters: Command line arguments - argc, argv
+ * Return value: Status
+ * Algorithm: -
+ *************************************************************
+ */
 
 mplusplus_intg main(int argc, char** argv) {
 
@@ -120,6 +122,23 @@ mplusplus_intg main(int argc, char** argv) {
 		printf("%s%c%s", "\n[Option '", PGM_CDR, "': Starting CODER .....]\n\n");
 		main1Coder(argc, argv);
 		break;
+
+	case PGM_RDR:
+		printf("%s%c%s", "\n[Option '", PGM_RDR, "': Starting READER .....]\n\n");
+		main2Reader(argc, argv);
+		break;
+
+	case PGM_SCN:
+		printf("%s%c%s", "\n[Option '", PGM_SCN, "': Starting SCANNER .....]\n\n");
+		if (argc < 3) {
+			printf("Error: No input file provided for scanner.\n");
+			printf("Usage: %s %c <input_file>\n", argv[0], PGM_SCN);
+			return EXIT_FAILURE;
+		}
+		main3Scanner(argc, argv);
+		break;
+
+
 	default:
 		printf("%s%c%s%c%s%c%s%c%s%c%s", "OPTIONS:\n* [",
 			PGM_CDR, "] - Coder\n* [",
@@ -131,6 +150,7 @@ mplusplus_intg main(int argc, char** argv) {
 	}
 	return EXIT_SUCCESS;
 }
+
 
 /*
 ***********************************************************

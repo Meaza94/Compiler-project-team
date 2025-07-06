@@ -17,7 +17,6 @@ language name: mplusplus
 
 */
 
-
 /*
 ************************************************************
 * COMPILERS COURSE - Algonquin College
@@ -29,23 +28,23 @@ language name: mplusplus
 # ECHO "=---------------------------------------="
 # ECHO "|  COMPILERS - ALGONQUIN COLLEGE (S25)  |"
 # ECHO "=---------------------------------------="
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@           %&@@@@@@@@@@@     @@    ”
-# ECHO "    @@       @%% (@@@@@@@@@  @     @@    ”
-# ECHO "    @@      @& @   @ @       @     @@    ”
-# ECHO "    @@     @ @ %  / /   @@@@@@     @@    ”
-# ECHO "    @@      & @ @  @@              @@    ”
-# ECHO "    @@       @/ @*@ @ @   @        @@    ”
-# ECHO "    @@           @@@@  @@ @ @      @@    ”
-# ECHO "    @@            /@@    @@@ @     @@    ”
-# ECHO "    @@     @      / /     @@ @     @@    ”
-# ECHO "    @@     @ @@   /@/   @@@ @      @@    ”
-# ECHO "    @@     @@@@@@@@@@@@@@@         @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@         S O F I A           @@    ”
-# ECHO "    @@                             @@    ”
-# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    ”
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@           %&@@@@@@@@@@@     @@    "
+# ECHO "    @@       @%% (@@@@@@@@@  @     @@    "
+# ECHO "    @@      @& @   @ @       @     @@    "
+# ECHO "    @@     @ @ %  / /   @@@@@@     @@    "
+# ECHO "    @@      & @ @  @@              @@    "
+# ECHO "    @@       @/ @*@ @ @   @        @@    "
+# ECHO "    @@           @@@@  @@ @ @      @@    "
+# ECHO "    @@            /@@    @@@ @     @@    "
+# ECHO "    @@     @      / /     @@ @     @@    "
+# ECHO "    @@     @ @@   /@/   @@@ @      @@    "
+# ECHO "    @@     @@@@@@@@@@@@@@@         @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@         S O F I A           @@    "
+# ECHO "    @@                             @@    "
+# ECHO "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "
 # ECHO "                                         "
 # ECHO "[COMPILER SCRIPT .......................]"
 # ECHO "                                         "
@@ -78,9 +77,17 @@ language name: mplusplus
  * ............................................................................
  */
 
-/* TO_DO: Adjust your language (cannot be "Sofia") */
-/* Language name */
+ /* TO_DO: Adjust your language (cannot be "Sofia") */
+ /* Language name */
 #define STR_LANGNAME	"mplusplus"
+
+
+
+/* Logical constants for mplusplus Math DSL */
+#define MPP_TRUE  1
+#define MPP_FALSE 0
+
+
 
 /* Logical constants - adapt for your language */
 #define MPLUSPLUS_TRUE  1
@@ -99,7 +106,7 @@ NOTE: Some types may not be directly used by your language,
 
 /* TO_DO: Define your typedefs */
 typedef char			mplusplus_char;
-typedef char*           mplusplus_strg;
+typedef char* mplusplus_strg;
 typedef int		        mplusplus_intg;
 typedef float			mplusplus_real;
 typedef void			mplusplus_void;
@@ -134,10 +141,12 @@ Main functions signatures
 (Code will be updated during next assignments)
 ------------------------------------------------------------
 */
-mplusplus_intg main1Coder	(mplusplus_intg argc, mplusplus_strg* argv);
+mplusplus_intg main1Coder(mplusplus_intg argc, mplusplus_strg* argv);
+mplusplus_intg main2Reader(mplusplus_intg argc, mplusplus_strg* argv);
+mplusplus_intg main3Scanner(mplusplus_intg argc, mplusplus_strg* argv);
 
 mplusplus_void printLogo();
-mplusplus_void errorPrint(mplusplus_boln fmt, ...);
+mplusplus_void errorPrint(mplusplus_strg fmt, ...);
 
 #endif
 

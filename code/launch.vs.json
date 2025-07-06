@@ -8,11 +8,11 @@
       "projectTarget": "Compilers.exe",
       "name": "Compilers.exe",
       "args": [
-		1,
-		1,
-		"README.txt",
-		"CODED.txt"
-	  ]
+        1,
+        1,
+        "README.txt",
+        "CODED.txt"
+      ]
     }
   ]
 }
