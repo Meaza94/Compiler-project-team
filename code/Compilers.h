@@ -146,6 +146,7 @@ Main functions signatures
 mplusplus_intg main1Coder(mplusplus_intg argc, mplusplus_strg* argv);
 mplusplus_intg main2Reader(mplusplus_intg argc, mplusplus_strg* argv);
 mplusplus_intg main3Scanner(mplusplus_intg argc, mplusplus_strg* argv);
+mplusplus_boln main4Parser(mplusplus_intg argc, mplusplus_strg* argv);
 
 mplusplus_void printLogo();
 mplusplus_void errorPrint(mplusplus_strg fmt, ...);

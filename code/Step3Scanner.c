@@ -1,18 +1,22 @@
 ﻿/*
-************************************************************
-* COMPILERS COURSE - Algonquin College
-* Code version: Summer, 2025
-* Author: Mihretab Meaza & Mohamad Al Dakkak
-* Professors: Paulo Sousa
-************************************************************
-* File name: Step3Scanner.c
-* Compiler: MS Visual Studio 2022
-* Course: CST 8152 – Compilers, Lab Section: [011, 012]
-* Assignment: A3 - Scanner Implementation
-* Date: July 02 2025
-* Purpose: This file contains all functionalities for mplusplus Math DSL Scanner
-* Function list: All scanner implementation functions for algebraic math language
-*************************************************************/
+
+      TEAM MEMBERS
+
+Student Name: Mihretab Meaza
+student Number: 041106564
+Professor: Paulo Sousa
+Compilers Assignment 1
+language name: mplusplus
+
+
+Student Name: Mohamad Al Dakkak
+student Number: 041120078
+Professor: Paulo Sousa
+Compilers Assignment 1
+language name: mplusplus
+
+*/
+
 
 #define _CRT_SECURE_NO_WARNINGS
 
