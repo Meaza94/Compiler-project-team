@@ -7,7 +7,7 @@
 ************************************************************
 * File name: Step3Scanner.h
 * Compiler: MS Visual Studio 2022
-* Course: CST 8152 – Compilers, Lab Section: [011, 012]
+* Course: CST 8152 – Compilers, Lab Section: 
 * Assignment: A3 - Scanner Implementation
 * Date: July 02 2025
 * Purpose: This file is the main header for mplusplus Math DSL Scanner
