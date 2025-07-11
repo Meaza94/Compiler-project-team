@@ -111,6 +111,8 @@ typedef int		        mplusplus_intg;
 typedef float			mplusplus_real;
 typedef void			mplusplus_void;
 
+
+
 typedef unsigned char	mplusplus_boln;
 typedef unsigned char	mplusplus_byte;
 

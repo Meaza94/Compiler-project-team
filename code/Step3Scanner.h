@@ -1,21 +1,18 @@
 ﻿/*
-
-      TEAM MEMBERS
-
-Student Name: Mihretab Meaza
-student Number: 041106564
-Professor: Paulo Sousa
-Compilers Assignment 1
-language name: mplusplus
-
-
-Student Name: Mohamad Al Dakkak
-student Number: 041120078
-Professor: Paulo Sousa
-Compilers Assignment 1
-language name: mplusplus
-
-*/
+************************************************************
+* COMPILERS COURSE - Algonquin College
+* Code version: Summer, 2025
+* Author: Mihretab Meaza & Mohamad Al Dakkak
+* Professors: Paulo Sousa
+************************************************************
+* File name: Step3Scanner.h
+* Compiler: MS Visual Studio 2022
+* Course: CST 8152 – Compilers, Lab Section: [011, 012]
+* Assignment: A3 - Scanner Implementation
+* Date: July 02 2025
+* Purpose: This file is the main header for mplusplus Math DSL Scanner
+* Function list: All scanner function declarations for algebraic math language
+*************************************************************/
 
 #ifndef COMPILERS_H_
 #include "Compilers.h"
@@ -160,7 +157,7 @@ typedef struct scannerData {
 #define UND_CHR     '_'     /* Underscore */
 #define AMP_CHR     '&'     /* Ampersand for method names */
 #define QUT_CHR     '\"'    /* Quote */
-#define HST_CHR     '#'     /* Hash for comments */
+#define HST_CHR     '@'     /* @ for comments */
 #define TAB_CHR     '\t'    /* Tab */
 #define SPC_CHR     ' '     /* Space */
 #define NWL_CHR     '\n'    /* Newline */
@@ -203,23 +200,24 @@ typedef struct scannerData {
 #define COL_QUOTE       4   /* " */
 #define COL_DOT         5   /* . */
 #define COL_EOF         6   /* EOF */
-#define COL_HASH        7   /* # */
+#define COL_AT          7       /* # */
 #define COL_OTHER       8   /* everything else */
 
 /* COMPLETE: DFA Transition Table with PROPER FLOAT support */
 static mplusplus_intg transitionTable[NUM_STATES][CHAR_CLASSES] = {
-    /*       L   D   _   &   "   .   E   #   O */
+    /*       L   D   _   &   "   .   E   @   O */
     /* S0 */{1,  2,  1,  1,  5,  ESNR, ESWR, 6, ESNR},
     /* S1 */{1,  1,  1,  3,  4,  4,  4,  4,  4},
-    /* S2 */{4,  2,  4,  4,  4,  7,  4,  4,  4},    
+    /* S2 */{4,  2,  4,  4,  4,  7,  4,  4,  4},
     /* S3 */{4,  4,  4,  4,  4,  4,  4,  4,  4},
     /* S4 */{ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR},
     /* S5 */{5,  5,  5,  5,  4,  5,  ESWR, 5,  5},
     /* S6 */{6,  6,  6,  6,  6,  6,  ESWR, 4,  6},
-    /* S7 */{4,  7,  4,  4,  4,  4,  4,  4,  4},    
+    /* S7 */{4,  7,  4,  4,  4,  4,  4,  4,  4},
     /* S8 */{ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR},
     /* S9 */{ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR}
 };
+
 
 /* State Types for mplusplus Math DSL */
 #define NOFS    0       /* not accepting state */
