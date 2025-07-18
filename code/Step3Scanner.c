@@ -1,22 +1,19 @@
 ﻿/*
-
-      TEAM MEMBERS
-
-Student Name: Mihretab Meaza
-student Number: 041106564
-Professor: Paulo Sousa
-Compilers Assignment 1
-language name: mplusplus
-
-
-Student Name: Mohamad Al Dakkak
-student Number: 041120078
-Professor: Paulo Sousa
-Compilers Assignment 1
-language name: mplusplus
-
+************************************************************
+* COMPILERS COURSE - Algonquin College
+* Code version: Summer, 2025
+* Author: Mihretab Meaza & Mohamad Al Dakkak
+* Professors: Paulo Sousa
+************************************************************
+* File name: Step3Scanner.c
+* Compiler: MS Visual Studio 2022
+* Course: CST 8152 – Compilers, Lab Section: [011, 012]
+* Assignment: A3 - Scanner Implementation
+* Date: July 02 2025
+* Purpose: This file contains all functionalities for mplusplus Math DSL Scanner
+* Function list: All scanner implementation functions for algebraic math language
+************************************************************
 */
-
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -104,14 +101,16 @@ mplusplus_intg startScanner(BufferPointer psc_buf) {
  */
 
 Token tokenizer(mplusplus_void) {
-    Token currentToken = { 0 };         /* token to return after pattern recognition */
-    mplusplus_char c;                    /* input symbol */
-    mplusplus_intg state = 0;            /* initial state of the FSM */
-    mplusplus_intg lexStart;             /* start offset of a lexeme in the input char buffer */
-    mplusplus_intg lexEnd;               /* end offset of a lexeme in the input char buffer */
-    mplusplus_intg lexLength;            /* token length */
-    mplusplus_intg i;                    /* counter */
-    mplusplus_strg lexeme;               /* lexeme string */
+    Token currentToken = { 0 };
+    mplusplus_char c;
+    mplusplus_intg state = 0;
+    mplusplus_intg lexStart;
+    mplusplus_intg lexEnd;
+    mplusplus_intg lexLength;
+    mplusplus_intg i;
+    mplusplus_intg col;
+    mplusplus_intg next_st;
+    mplusplus_strg lexeme;
 
     while (1) { /* endless loop broken by token returns */
         c = readerGetChar(sourceBuffer);
@@ -123,6 +122,7 @@ Token tokenizer(mplusplus_void) {
             scData.scanHistogram[currentToken.code]++;
             return currentToken;
         }
+        // ... rest of your existing code
 
         if (c == EOS_CHR) {
             currentToken.code = SEOF_T;
@@ -168,18 +168,17 @@ Token tokenizer(mplusplus_void) {
             scData.scanHistogram[currentToken.code]++;
             return currentToken;
 
-            /* FIXED Line 116: Logical operators - removed unreachable code */
+            /* Logical operators - removed unreachable code */
         case AND_CHR:
             c = readerGetChar(sourceBuffer);
-            if (c == AND_CHR) {
+            if (c == '&') goto dfa_processing;
+            {
                 currentToken.code = LOGOP_T;
                 currentToken.attribute.logicalOperator = OP_AND;
                 scData.scanHistogram[currentToken.code]++;
                 return currentToken;
             }
-            /* FIXED: Removed else block with unreachable break */
             readerRetract(sourceBuffer);
-            /* Fall through to default case for DFA processing */
             goto dfa_processing;
 
             /* Mathematical operator symbols - directly recognized */
@@ -188,11 +187,11 @@ Token tokenizer(mplusplus_void) {
             currentToken.attribute.arithmeticOperator = OP_ADD;
             scData.scanHistogram[currentToken.code]++;
             return currentToken;
+
         case MINUS_CHR:
-            currentToken.code = AROP_T;
-            currentToken.attribute.arithmeticOperator = OP_SUB;
-            scData.scanHistogram[currentToken.code]++;
-            return currentToken;
+            goto dfa_processing;  // ← Let DFA handle it
+
+
         case MUL_CHR:
             currentToken.code = AROP_T;
             currentToken.attribute.arithmeticOperator = OP_MUL;
@@ -266,10 +265,12 @@ Token tokenizer(mplusplus_void) {
             currentToken.code = LPR_T;
             scData.scanHistogram[currentToken.code]++;
             return currentToken;
+
         case RPR_CHR:
             currentToken.code = RPR_T;
             scData.scanHistogram[currentToken.code]++;
-            return currentToken;
+            return currentToken;  // Return RPR_T directly, let next tokenizer handle next char like ';'
+
         case LBR_CHR:
             currentToken.code = LBR_T;
             scData.scanHistogram[currentToken.code]++;
@@ -290,28 +291,49 @@ Token tokenizer(mplusplus_void) {
                 ALL complex patterns (identifiers, numbers, floats) use DFA
                 -----------------------------------------------------------------------
             */
-
         default: /* ALL letters, digits, dots, etc. go through DFA */
         dfa_processing:
             state = 0;
             lexStart = readerGetPosRead(sourceBuffer) - 1;
             readerSetMark(sourceBuffer, lexStart);
 
-            /* Process through DFA states */
-            while (stateType[state] == NOFS) {
-                state = nextState(state, c);
-                if (state == ESNR || state == ESWR) break;
+            while (1) {
+                col = nextClass(c);
+                next_st = transitionTable[state][col];
+
+                if (next_st == ESNR || next_st == ESWR) {
+                    state = next_st;
+                    break;
+                }
+
+                state = next_st;
+
+                if (stateType[state] != NOFS) {
+                    if (stateType[state] == FSWR) {
+                        readerRetract(sourceBuffer);
+                    }
+                    break;
+                }
+
                 c = readerGetChar(sourceBuffer);
                 if (c == READER_TERMINATOR) break;
             }
 
-            /* Handle retract if needed */
-            if (stateType[state] == FSWR)
-                readerRetract(sourceBuffer);
+            if (state == ESNR || state == ESWR) {
+                if (state == ESWR) {
+                    readerRetract(sourceBuffer);
+                }
+                currentToken.code = ERR_T;
+                currentToken.attribute.errLexeme[0] = c;
+                currentToken.attribute.errLexeme[1] = EOS_CHR;
+                scData.scanHistogram[currentToken.code]++;
+                return currentToken;
+            }
 
-            /* Extract lexeme */
             lexEnd = readerGetPosRead(sourceBuffer);
             lexLength = lexEnd - lexStart;
+
+            /* Create lexeme buffer */
             lexemeBuffer = readerCreate((mplusplus_intg)lexLength + 2);
             if (!lexemeBuffer) {
                 fprintf(stderr, "Scanner error: Can not create buffer\n");
@@ -339,9 +361,9 @@ Token tokenizer(mplusplus_void) {
             readerFree(lexemeBuffer);
             return currentToken;
         } /* switch */
+
     } /* while */
 } /* tokenizer */
-
 /*
  ************************************************************
  * Get Next State for mplusplus Math DSL DFA - FIXED Line 149
@@ -358,10 +380,6 @@ mplusplus_intg nextState(mplusplus_intg state, mplusplus_char c) {
     col = nextClass(c);
     next = transitionTable[state][col];
 
-    if (DEBUG)
-        printf("Input symbol: %c Row: %d Column: %d Next: %d \n", c, state, col, next);
-
-    /* FIXED: Removed redundant debug code after assert */
     assert(next != FS);
     return next;
 }
@@ -390,7 +408,7 @@ mplusplus_intg nextClass(mplusplus_char c) {
         val = COL_QUOTE;
         break;
     case HST_CHR:
-        val = COL_AT;
+        val = COL_HASH;
         break;
     case DOT_CHR:
         val = COL_DOT;
@@ -429,8 +447,13 @@ Token funcIL(mplusplus_strg lexeme) {
         currentToken = (*finalStateTable[ESNR])(lexeme);
     }
     else {
-        tlong = atol(lexeme);
-        if (tlong >= 0 && tlong <= SHRT_MAX) {
+        if (lexeme[0] == MINUS_CHR && strlen(lexeme) > 1) {
+            tlong = atol(lexeme + 1) * -1; // Handle unary minus
+        }
+        else {
+            tlong = atol(lexeme);
+        }
+        if (tlong >= SHRT_MIN && tlong <= SHRT_MAX) {
             currentToken.code = INL_T;
             scData.scanHistogram[currentToken.code]++;
             currentToken.attribute.intValue = (mplusplus_intg)tlong;
@@ -455,11 +478,24 @@ Token funcFLT(mplusplus_strg lexeme) {
     Token currentToken = { 0 };
     mplusplus_real tfloat;
 
+    // Reject lone "." as invalid float
+    if (strcmp(lexeme, ".") == 0) {
+        strcpy(currentToken.attribute.errLexeme, ".");
+        currentToken.code = ERR_T;
+        scData.scanHistogram[currentToken.code]++;
+        return currentToken;
+    }
+
     if (lexeme[0] != EOS_CHR && strlen(lexeme) > FLT_LEN) {
         currentToken = (*finalStateTable[ESNR])(lexeme);
     }
     else {
-        tfloat = (mplusplus_real)atof(lexeme);
+        if (lexeme[0] == MINUS_CHR && strlen(lexeme) > 1) {
+            tfloat = (mplusplus_real)atof(lexeme + 1) * -1.0;
+        }
+        else {
+            tfloat = (mplusplus_real)atof(lexeme);
+        }
         if (tfloat >= -FLT_MAX && tfloat <= FLT_MAX) {
             currentToken.code = FLT_T;
             scData.scanHistogram[currentToken.code]++;
@@ -469,9 +505,9 @@ Token funcFLT(mplusplus_strg lexeme) {
             currentToken = (*finalStateTable[ESNR])(lexeme);
         }
     }
+
     return currentToken;
 }
-
 /*
  ************************************************************
  * Acceptance State Function for Identifiers (mplusplus Math DSL)
@@ -513,32 +549,29 @@ Token funcID(mplusplus_strg lexeme) {
 
 Token funcSL(mplusplus_strg lexeme) {
     Token currentToken = { 0 };
-    mplusplus_intg i = 0, len = (mplusplus_intg)strlen(lexeme);
-
+    mplusplus_intg i = 0, len = (mplusplus_intg)strlen(lexeme) - 2; // Exclude quotes
+    if (len > readerGetSize(stringLiteralTable) - readerGetPosWrte(stringLiteralTable)) {
+        currentToken.code = ERR_T;
+        strcpy(currentToken.attribute.errLexeme, "String literal too long");
+        errorNumber = RTE_CODE;
+        return currentToken;
+    }
     currentToken.attribute.contentString = readerGetPosWrte(stringLiteralTable);
-
-    /* Copy string content (excluding quotes) to string literal table */
-    for (i = 1; i < len - 1; i++) {
-        if (lexeme[i] == NWL_CHR)
-            line++;
+    for (i = 1; i < (mplusplus_intg)strlen(lexeme) - 1; i++) {
+        if (lexeme[i] == NWL_CHR) line++;
         if (!readerAddChar(stringLiteralTable, lexeme[i])) {
             currentToken.code = ERR_T;
-            scData.scanHistogram[currentToken.code]++;
-            strcpy(currentToken.attribute.errLexeme, "Run Time Error:");
+            strcpy(currentToken.attribute.errLexeme, "Run Time Error");
             errorNumber = RTE_CODE;
             return currentToken;
         }
     }
-
-    /* Add string terminator */
     if (!readerAddChar(stringLiteralTable, EOS_CHR)) {
         currentToken.code = ERR_T;
-        scData.scanHistogram[currentToken.code]++;
-        strcpy(currentToken.attribute.errLexeme, "Run Time Error:");
+        strcpy(currentToken.attribute.errLexeme, "Run Time Error");
         errorNumber = RTE_CODE;
         return currentToken;
     }
-
     currentToken.code = STR_T;
     scData.scanHistogram[currentToken.code]++;
     return currentToken;
@@ -556,25 +589,43 @@ Token funcSL(mplusplus_strg lexeme) {
 Token funcKEY(mplusplus_strg lexeme) {
     Token currentToken = { 0 };
     mplusplus_intg kwindex = -1, j = 0;
+    mplusplus_char cleanLexeme[VID_LEN + 1];
+    mplusplus_intg i, len;
+
+    /* Trim trailing whitespace/punctuation */
+    len = (mplusplus_intg)strlen(lexeme);
+    for (i = 0; i < len && i < VID_LEN; i++) {
+        if (isalnum(lexeme[i]) || lexeme[i] == '_') {
+            cleanLexeme[i] = lexeme[i];
+        }
+        else {
+            break; /* Stop at first non-identifier character */
+        }
+    }
+    // Additional trim for any leading/trailing spaces (though leading shouldn't occur)
+    while (i > 0 && isspace(cleanLexeme[i - 1])) {
+        i--;
+    }
+    while (i > 0 && ispunct(cleanLexeme[i - 1]) && cleanLexeme[i - 1] != '_') {
+        i--;
+    }
+    cleanLexeme[i] = EOS_CHR;
 
     /* Search for keyword in keyword table first */
     for (j = 0; j < KWT_SIZE; j++) {
-        if (!strcmp(lexeme, keywordTable[j])) {
+        if (!strcmp(cleanLexeme, keywordTable[j])) {
             kwindex = j;
             break;
         }
     }
 
-    /* FIXED: Simplified logic to remove redundant code paths */
     if (kwindex != -1) {
-        /* It's a keyword */
         currentToken.code = KW_T;
         currentToken.attribute.codeType = kwindex;
     }
     else {
-        /* Not a keyword, treat as identifier */
         currentToken.code = ID_T;
-        strncpy(currentToken.attribute.idLexeme, lexeme, VID_LEN);
+        strncpy(currentToken.attribute.idLexeme, cleanLexeme, VID_LEN);
         currentToken.attribute.idLexeme[VID_LEN] = EOS_CHR;
     }
 

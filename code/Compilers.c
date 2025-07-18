@@ -138,6 +138,17 @@ mplusplus_intg main(int argc, char** argv) {
 		main3Scanner(argc, argv);
 		break;
 
+	case PGM_PSR:
+		printf("%s%c%s", "\n[Option '", PGM_PSR, "': Starting PARSER .....]\n\n");
+		if (argc < 3) {
+			printf("Error: No input file provided for parser.\n");
+			printf("Usage: %s %c <input_file>\n", argv[0], PGM_PSR);
+			return EXIT_FAILURE;
+		}
+		Main4Parser(argc, argv);
+		break;
+
+
 
 	default:
 		printf("%s%c%s%c%s%c%s%c%s%c%s", "OPTIONS:\n* [",

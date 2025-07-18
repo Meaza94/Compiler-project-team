@@ -1,5 +1,4 @@
 /*
-
       TEAM MEMBERS
 
 Student Name: Mihretab Meaza
@@ -8,13 +7,11 @@ Professor: Paulo Sousa
 Compilers Assignment 3
 language name: mplusplus
 
-
 Student Name: Mohamad Al Dakkak
 student Number: 041120078
 Professor: Paulo Sousa
 Compilers Assignment 3
 language name: mplusplus
-
 */
 
 #define _CRT_SECURE_NO_WARNINGS

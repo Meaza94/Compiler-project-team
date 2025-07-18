@@ -5,8 +5,8 @@
     {
       "type": "default",
       "project": "CMakeLists.txt",
-      "projectTarget": "Compilers.exe",
-      "name": "Compilers.exe",
+      "projectTarget": "mpluplus.exe",
+      "name": "mplusplus.exe",
       "args": [
         1,
         1,

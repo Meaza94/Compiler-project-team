@@ -7,12 +7,13 @@
 ************************************************************
 * File name: Step3Scanner.h
 * Compiler: MS Visual Studio 2022
-* Course: CST 8152 – Compilers, Lab Section: 
+* Course: CST 8152 – Compilers, Lab Section: [011, 012]
 * Assignment: A3 - Scanner Implementation
 * Date: July 02 2025
 * Purpose: This file is the main header for mplusplus Math DSL Scanner
 * Function list: All scanner function declarations for algebraic math language
-*************************************************************/
+************************************************************
+*/
 
 #ifndef COMPILERS_H_
 #include "Compilers.h"
@@ -121,7 +122,6 @@ typedef union TokenAttribute {
     EofOperator seofType;                       /* source-end-of-file attribute code */
     mplusplus_intg intValue;                    /* integer literal attribute (value) */
     mplusplus_real floatValue;                  /* float literal attribute (value) */
-    mplusplus_intg keywordIndex;                /* keyword index in the keyword table */
     mplusplus_intg contentString;               /* string literal offset from the beginning of the string literal buffer */
     mplusplus_char idLexeme[VID_LEN + 1];       /* variable identifier token attribute */
     mplusplus_char errLexeme[ERR_LEN + 1];      /* error token attribute */
@@ -157,7 +157,7 @@ typedef struct scannerData {
 #define UND_CHR     '_'     /* Underscore */
 #define AMP_CHR     '&'     /* Ampersand for method names */
 #define QUT_CHR     '\"'    /* Quote */
-#define HST_CHR     '@'     /* @ for comments */
+#define HST_CHR     '@'     /* Hash for comments */
 #define TAB_CHR     '\t'    /* Tab */
 #define SPC_CHR     ' '     /* Space */
 #define NWL_CHR     '\n'    /* Newline */
@@ -184,12 +184,12 @@ typedef struct scannerData {
 #define OR_CHR      '|'     /* Used in || */
 
 /* DFA States for mplusplus Math DSL */
-#define ESNR        8       /* Error state with no retract */
-#define ESWR        9       /* Error state with retract */
+#define ESNR        10      /* Error state with no retract */
+#define ESWR        11      /* Error state with retract */
 #define FS          -1      /* Final state marker */
-
+#define FSWR        2       /* Final state with retract */ 
 /* DFA Configuration */
-#define NUM_STATES  10      /* Total number of states */
+#define NUM_STATES  12      /* Total number of states */
 #define CHAR_CLASSES 9      /* Number of character classes INCLUDING DOT */
 
 /* Character Class Indices */
@@ -200,41 +200,40 @@ typedef struct scannerData {
 #define COL_QUOTE       4   /* " */
 #define COL_DOT         5   /* . */
 #define COL_EOF         6   /* EOF */
-#define COL_AT          7       /* # */
+#define COL_HASH        7   /* # */
 #define COL_OTHER       8   /* everything else */
 
-/* COMPLETE: DFA Transition Table with PROPER FLOAT support */
 static mplusplus_intg transitionTable[NUM_STATES][CHAR_CLASSES] = {
     /*       L   D   _   &   "   .   E   @   O */
-    /* S0 */{1,  2,  1,  1,  5,  ESNR, ESWR, 6, ESNR},
-    /* S1 */{1,  1,  1,  3,  4,  4,  4,  4,  4},
-    /* S2 */{4,  2,  4,  4,  4,  7,  4,  4,  4},
-    /* S3 */{4,  4,  4,  4,  4,  4,  4,  4,  4},
-    /* S4 */{ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR},
-    /* S5 */{5,  5,  5,  5,  4,  5,  ESWR, 5,  5},
-    /* S6 */{6,  6,  6,  6,  6,  6,  ESWR, 4,  6},
-    /* S7 */{4,  7,  4,  4,  4,  4,  4,  4,  4},
-    /* S8 */{ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR},
-    /* S9 */{ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR}
+    /* S0 */ {1,  2,  1,  1,  5,  ESWR, ESWR, 6,  ESWR}, // Initial state
+    /* S1 */ {1,  1,  1,  3,  4,  4,  4,  4,  4}, // Building identifier
+    /* S2 */ {4,  2,  4,  4,  4,  7,  4,  4,  4}, // Building integer, DOT→float
+    /* S3 */ {4,  4,  4,  4,  4,  4,  4,  4,  4}, // Method name complete
+    /* S4 */ {FSWR, FSWR, FSWR, FSWR, FSWR, FSWR, FSWR, FSWR, FSWR}, // Final state
+    /* S5 */ {5,  5,  5,  5,  4,  5,  ESWR, 5,  5}, // Building string
+    /* S6 */ {6,  6,  6,  6,  6,  6,  4,  4,  6}, // Building comment
+    /* S7 */ {8, 7, 8, 8, 8, 8, 8, 8, 8}, // Building float fractional part
+    /* S8 */ {ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR, ESNR}, // Error no retract
+    /* S9 */ {ESWR, ESWR, ESWR, ESWR, ESWR, ESWR, ESWR, ESWR, ESWR}  // Error with retract
 };
 
-
-/* State Types for mplusplus Math DSL */
-#define NOFS    0       /* not accepting state */
-#define FSNR    1       /* accepting state with no retract */
-#define FSWR    2       /* accepting state with retract */
+#define FSWR        2       /* Final state with retract */ 
+#define NOFS        0       /* not accepting state */
+#define FSNR        1       /* accepting state with no retract */
 
 static mplusplus_intg stateType[NUM_STATES] = {
     NOFS,   /* 00 - Initial state */
     NOFS,   /* 01 - Building identifier */
-    FSWR,   /* 02 - Integer literal */
-    FSNR,   /* 03 - Method name (ends with &) */
+    NOFS,   /* 02 - Building integer */
+    FSNR,   /* 03 - Method name */
     FSWR,   /* 04 - Identifier/Keyword/String end */
     NOFS,   /* 05 - Building string */
     NOFS,   /* 06 - Building comment */
-    FSWR,   /* 07 - Float literal - CRITICAL: FSWR for proper recognition */
-    FSNR,   /* 08 - Error state no retract */
-    FSWR    /* 09 - Error state with retract */
+    NOFS,   /* 07 - Building float */
+    FSWR,   /* 08 - Float final state (with retract) */
+    FSWR,   /* 09 - Error with retract */
+    FSNR,   /* 10 - Error no retract */
+    FSWR    /* 11 - Error with retract */
 };
 
 /* Function Prototypes for mplusplus Math DSL */
@@ -262,16 +261,17 @@ static PTR_ACCFUN finalStateTable[NUM_STATES] = {
     NULL,       /* 01 - Building identifier */
     funcIL,     /* 02 - Integer literal */
     funcID,     /* 03 - Method name */
-    funcKEY,    /* 04 - Identifier/Keyword/String end */
-    NULL,       /* 05 - Building string */
-    NULL,       /* 06 - Building comment */
-    funcFLT,    /* 07 - Float literal - CRITICAL: calls funcFLT */
-    funcErr,    /* 08 - Error state no retract */
-    funcErr     /* 09 - Error state with retract */
+    funcKEY,    /* 04 - Identifier/Keyword end */
+    funcSL,     /* 05 - String literal */
+    funcCMT,    /* 06 - Comment */
+    NULL,       /* 07 - Building float (non-final) */
+    funcFLT,    /* 08 - Float final state ← CRITICAL */
+    funcErr,    /* 09 - Error */
+    funcErr,    /* 10 - Error */
+    funcErr     /* 11 - Error */
 };
-
 /* FIXED: Keywords for mplusplus Math DSL - Complete list with "let" */
-#define KWT_SIZE 12
+#define KWT_SIZE 10
 
 static mplusplus_strg keywordTable[KWT_SIZE] = {
     "let",      /* Variable declaration - CRITICAL: Added let as first entry */
@@ -281,8 +281,6 @@ static mplusplus_strg keywordTable[KWT_SIZE] = {
     "return",   /* Return statement */
     "solve",    /* Solve equation */
     "derive",   /* Derivative */
-    "pi",       /* Mathematical constant π */
-    "e",        /* Mathematical constant e */
     "sin",      /* Sine function */
     "cos",      /* Cosine function */
     "log"       /* Logarithm function */
